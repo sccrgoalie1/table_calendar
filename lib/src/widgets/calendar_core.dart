@@ -28,6 +28,7 @@ class CalendarCore extends StatelessWidget {
   final PageController? pageController;
   final ScrollPhysics? scrollPhysics;
   final _OnCalendarPageChanged onPageChanged;
+  final void Function(DateTime focusedDay)? onPageChanging;
 
   const CalendarCore({
     Key? key,
@@ -42,6 +43,7 @@ class CalendarCore extends StatelessWidget {
     this.startingDayOfWeek = StartingDayOfWeek.sunday,
     this.calendarFormat = CalendarFormat.month,
     this.pageController,
+    this.onPageChanging,
     this.focusedDay,
     this.previousIndex,
     this.sixWeekMonthsEnforced = false,
@@ -68,7 +70,7 @@ class CalendarCore extends StatelessWidget {
             ? (constraints.maxHeight - actualDowHeight) /
                 _getRowCount(calendarFormat, baseDay)
             : null;
-
+        onPageChanging?.call(baseDay);
         return CalendarPage(
           visibleDays: visibleDays,
           dowVisible: dowVisible,
@@ -89,7 +91,6 @@ class CalendarCore extends StatelessWidget {
               baseDay =
                   _getFocusedDay(calendarFormat, previousFocusedDay, index);
             }
-
             return SizedBox(
               height: constrainedRowHeight ?? rowHeight,
               child: dayBuilder(context, day, baseDay),

@@ -187,7 +187,7 @@ class TableCalendar<T> extends StatefulWidget {
   final void Function(DateTime focusedDay)? onPageChanged;
 
   /// Called whenever currently visible calendar page is changing.
-  final Future Function(DateTime focusedDay)? onPageChanging;
+  final void Function(DateTime focusedDay)? onPageChanging;
 
   /// Called whenever `calendarFormat` is changed.
   final void Function(CalendarFormat format)? onFormatChanged;
@@ -489,7 +489,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
             sixWeekMonthsEnforced: widget.sixWeekMonthsEnforced,
             onVerticalSwipe: _swipeCalendarFormat,
             onPageChanging: (focusedDay) async {
-              await widget.onPageChanging?.call(focusedDay);
+              widget.onPageChanging?.call(focusedDay);
             },
             onPageChanged: (focusedDay) {
               _focusedDay.value = focusedDay;

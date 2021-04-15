@@ -28,7 +28,7 @@ class TableCalendarBase extends StatefulWidget {
   final Map<CalendarFormat, String> availableCalendarFormats;
   final SwipeCallback? onVerticalSwipe;
   final void Function(DateTime focusedDay)? onPageChanged;
-  final Future Function(DateTime focusedDay)? onPageChanging;
+  final void Function(DateTime focusedDay)? onPageChanging;
   final void Function(PageController pageController)? onCalendarCreated;
 
   TableCalendarBase({
@@ -197,7 +197,6 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
               rowDecoration: widget.rowDecoration,
               onPageChanged: (index, focusedMonth) async {
                 if (!_pageCallbackDisabled) {
-                  await widget.onPageChanging?.call(focusedMonth);
                   if (!isSameDay(_focusedDay, focusedMonth)) {
                     _focusedDay = focusedMonth;
                   }
